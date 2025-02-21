@@ -1,36 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahmoud Alhyari for Real Estate</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        h1 {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #ffffff;
+        }
+        .social-links {
+            margin: 40px auto;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .social-links a {
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 0;
+            padding: 12px 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            color: #333;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .social-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255,255,255,0.2);
+        }
+        .social-links img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+    </style>
+</head>
 <body>
+    <h1>Mahmoud Alhyari for Real Estate</h1>
+
+    <div class="social-links" id="links">
+        <a href="#" id="fb" target="_blank" data-platform="facebook">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">Facebook
+        </a>
+        <a href="#" id="ig" target="_blank" data-platform="instagram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">Instagram
+        </a>
+        <a href="#" id="os" target="_blank" data-platform="opensooq">
+            <img src="https://opensooq.com/favicon.ico" alt="OpenSooq">OpenSooq
+        </a>
+        <a href="#" id="wa" target="_blank" data-platform="whatsapp">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">WhatsApp
+        </a>
+        <a href="#" id="gm" target="_blank" data-platform="googlemaps">
+            <img src="https://www.google.com/images/branding/product/ico/maps15_bnuw3a_32dp.ico" alt="Google Maps">Google Maps
+        </a>
+    </div>
+
     <script>
         function updateSocialLinks(url) {
             try {
-                const urlObj = new URL(url); // Use URL object for robust parsing
-                const hostname = urlObj.hostname;
+                const urlObj = new URL(url);
+                const hostname = urlObj.hostname.toLowerCase();
 
-                // Improved platform matching using a lookup object:
                 const platformMap = {
                     "facebook.com": "facebook",
-                    "www.facebook.com": "facebook", // Include www
+                    "www.facebook.com": "facebook",
                     "instagram.com": "instagram",
                     "www.instagram.com": "instagram",
-                    "twitter.com": "twitter",
-                    "x.com": "twitter", // Handle both x.com and twitter.com
+                    "opensooq.com": "opensooq",
+                    "www.opensooq.com": "opensooq",
+                    "jo.opensooq.com": "opensooq",
                     "wa.me": "whatsapp",
-                    "api.whatsapp.com": "whatsapp", // Handle api.whatsapp.com links
+                    "api.whatsapp.com": "whatsapp",
                     "maps.google.com": "googlemaps",
-                    "www.google.com/maps": "googlemaps", // Handle www
-                    "google.com/maps": "googlemaps", // Handle google.com/maps
-                    "maps.gstatic.com": "googlemaps" //Handle maps.gstatic.com
+                    "www.google.com": "googlemaps",
+                    "google.com": "googlemaps"
                 };
 
-                const platform = platformMap[hostname];
+                const platform = Object.keys(platformMap).reduce((found, domain) => {
+                    return hostname.includes(domain) ? platformMap[domain] : found;
+                }, null);
 
                 if (platform) {
                     const linkElement = document.querySelector(`#links a[data-platform="${platform}"]`);
                     if (linkElement) {
-                      linkElement.href = url.startsWith('http') ? url : `https://${url}`;
+                        linkElement.href = url.startsWith('http') ? url : `https://${url}`;
                     } else {
                         console.error("Link element not found for platform:", platform);
                     }
@@ -42,16 +113,13 @@
             }
         }
 
-
-        // Example usage (replace with your actual URL source):
-        updateSocialLinks("https://www.facebook.com/yourpage");
-        updateSocialLinks("https://www.instagram.com/yourprofile");
-        updateSocialLinks("https://twitter.com/yourtwitter"); // Or x.com
-        updateSocialLinks("https://wa.me/1234567890");
-        updateSocialLinks("https://www.google.com/maps/place/Eiffel+Tower,+Paris,+France/@48.8584462,2.2944722,17z/data=!3m4!1e1!3m2!1s0x47e66e1f06e2b161:0x995ba1c676f3f5df!8m2!3d48.8584462!4d2.2944722"); // Example Google Maps URL
-        updateSocialLinks("https://maps.google.com/?ll=31.9522,35.9106&z=11&t=m"); // Example Google Maps URL
-        updateSocialLinks("https://maps.gstatic.com/mapfiles/api-3/images/ic_plus.png"); // Example Google Maps URL
-
+        // === EDIT YOUR SOCIAL MEDIA URLS HERE ===
+        // Replace these with your actual social media links
+        updateSocialLinks("https://www.facebook.com/Archi.mohamad.Emran94"); // e.g., "https://www.facebook.com/mahmoudalhyari"
+        updateSocialLinks("https://www.instagram.com/mahmoud.hyari.jo/"); // e.g., "https://www.instagram.com/mahmoudalhyari"
+        updateSocialLinks("https://jo.opensooq.com/ar/%D9%85%D8%AA%D8%A7%D8%AC%D8%B1/%D9%85%D8%AD%D9%85%D9%88%D8%AF-%D8%A7%D9%84%D8%AD%D9%8A%D8%A7%D8%B1%D9%8A-7797555"); // e.g., "https://jo.opensooq.com/en/mahmoud-alhyari"
+        updateSocialLinks("https://wa.me/+962776402010"); // e.g., "https://wa.me/962123456789" (no spaces, include country code)
+        updateSocialLinks("https://www.google.com/maps/place/%D8%A7%D9%84%D8%AD%D9%8A%D8%A7%D8%B1%D9%8A+%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A+(%D8%B4%D8%B1%D9%83%D8%A9+%D9%85%D8%AD%D9%85%D9%88%D8%AF+%D8%A7%D9%84%D8%AD%D9%8A%D8%A7%D8%B1%D9%8A+%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1+%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A)%E2%80%AD/@32.0283893,35.8679265,19z/data=!4m6!3m5!1s0x151c9f0e03dd4073:0x1ea11871c1100813!8m2!3d32.0283991!4d35.8677098!16s%2Fg%2F11hzyz3_t1?entry=ttu&g_ep=EgoyMDI1MDIxOC4wIKXMDSoASAFQAw%3D%3D"); // e.g., "https://www.google.com/maps/place/Amman,+Jordan"
     </script>
 </body>
 </html>
