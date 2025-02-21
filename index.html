@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    </head>
+<body>
+    <script>
+        function updateSocialLinks(url) {
+            try {
+                const urlObj = new URL(url); // Use URL object for robust parsing
+                const hostname = urlObj.hostname;
+
+                // Improved platform matching using a lookup object:
+                const platformMap = {
+                    "facebook.com": "facebook",
+                    "www.facebook.com": "facebook", // Include www
+                    "instagram.com": "instagram",
+                    "www.instagram.com": "instagram",
+                    "twitter.com": "twitter",
+                    "x.com": "twitter", // Handle both x.com and twitter.com
+                    "wa.me": "whatsapp",
+                    "api.whatsapp.com": "whatsapp", // Handle api.whatsapp.com links
+                    "maps.google.com": "googlemaps",
+                    "www.google.com/maps": "googlemaps", // Handle www
+                    "google.com/maps": "googlemaps", // Handle google.com/maps
+                    "maps.gstatic.com": "googlemaps" //Handle maps.gstatic.com
+                };
+
+                const platform = platformMap[hostname];
+
+                if (platform) {
+                    const linkElement = document.querySelector(`#links a[data-platform="${platform}"]`);
+                    if (linkElement) {
+                      linkElement.href = url.startsWith('http') ? url : `https://${url}`;
+                    } else {
+                        console.error("Link element not found for platform:", platform);
+                    }
+                } else {
+                    console.error("No matching platform found for URL:", url, hostname);
+                }
+            } catch (error) {
+                console.error("Invalid URL:", url, error);
+            }
+        }
+
+
+        // Example usage (replace with your actual URL source):
+        updateSocialLinks("https://www.facebook.com/yourpage");
+        updateSocialLinks("https://www.instagram.com/yourprofile");
+        updateSocialLinks("https://twitter.com/yourtwitter"); // Or x.com
+        updateSocialLinks("https://wa.me/1234567890");
+        updateSocialLinks("https://www.google.com/maps/place/Eiffel+Tower,+Paris,+France/@48.8584462,2.2944722,17z/data=!3m4!1e1!3m2!1s0x47e66e1f06e2b161:0x995ba1c676f3f5df!8m2!3d48.8584462!4d2.2944722"); // Example Google Maps URL
+        updateSocialLinks("https://maps.google.com/?ll=31.9522,35.9106&z=11&t=m"); // Example Google Maps URL
+        updateSocialLinks("https://maps.gstatic.com/mapfiles/api-3/images/ic_plus.png"); // Example Google Maps URL
+
+    </script>
+</body>
+</html>
